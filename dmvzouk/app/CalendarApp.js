@@ -264,6 +264,15 @@ export default function CalendarApp({ events }) {
             border: "1px solid rgba(255,255,255,0.06)", padding: "28px",
             backdropFilter: "blur(20px)", position: "sticky", top: "20px",
           }}>
+            {events.length === 0 && (
+              <div style={{
+                padding: "20px", borderRadius: "12px", background: "rgba(242,153,74,0.1)",
+                border: "1px solid rgba(242,153,74,0.2)", marginBottom: "20px",
+                fontSize: "13px", color: "#F2994A", lineHeight: 1.5,
+              }}>
+                ⚠️ Could not load events from the Google Sheet. Make sure the sheet is published to web (File → Share → Publish to web → CSV).
+              </div>
+            )}
             <h3 style={{
               fontSize: "11px", fontWeight: 600, letterSpacing: "2.5px", textTransform: "uppercase",
               color: "rgba(232,228,239,0.45)", margin: "0 0 20px",
