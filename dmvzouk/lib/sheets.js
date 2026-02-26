@@ -81,7 +81,10 @@ function parseMonthHeader(cell) {
 
 export async function fetchEvents() {
   try {
-    const res = await fetch(SHEET_CSV_URL, { next: { revalidate: 300 } }); // 5 min cache
+    const res = await fetch(SHEET_CSV_URL, { 
+      cache: "no-store",
+      headers: { "Accept": "text/csv" },
+    });
     if (!res.ok) throw new Error(`Sheet fetch failed: ${res.status}`);
     const csv = await res.text();
     return parseEventsFromCSV(csv);
