@@ -26,7 +26,7 @@ const isToday = (y, m, d) => {
   return now.getFullYear() === y && now.getMonth() === m && now.getDate() === d;
 };
 
-export default function CalendarApp({ events }) {
+export default function CalendarApp({ events, usedFallback = false }) {
   const now = new Date();
   const [currentMonth, setCurrentMonth] = useState(now.getMonth());
   const [currentYear, setCurrentYear] = useState(now.getFullYear());
@@ -111,7 +111,7 @@ export default function CalendarApp({ events }) {
           <p style={{
             fontSize: "11px", color: "rgba(232,228,239,0.25)", marginTop: "12px",
             fontStyle: "italic",
-          }}>Auto-synced from the community Google Sheet</p>
+          }}>{usedFallback ? "Showing cached events — live sync will activate once the Google Sheet is published to web" : "Auto-synced from the community Google Sheet"}</p>
         </div>
 
         {/* Filter pills */}
