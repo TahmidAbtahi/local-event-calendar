@@ -414,7 +414,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
             letterSpacing: "0.5px",
           }}>
             Website built with love by{" "}
-            <a href="https://www.facebook.com/profile.php?id=61588535387670"
+            <a href="https://www.facebook.com/heartboundcoders"
               target="_blank" rel="noopener noreferrer"
               style={{ color: "rgba(232,228,239,0.5)", fontWeight: 600 }}>
               Heart.Bound.Coders
