@@ -26,6 +26,92 @@ const isToday = (y, m, d) => {
   return now.getFullYear() === y && now.getMonth() === m && now.getDate() === d;
 };
 
+function EventCard({ event }) {
+  const cfg = TYPE_CONFIG[event.type];
+  const hasLink = !!event.url;
+
+  const content = (
+    <div style={{
+      padding: "14px 16px", borderRadius: "12px", background: cfg.bg,
+      borderLeft: `3px solid ${cfg.color}`,
+      cursor: hasLink ? "pointer" : "default",
+      transition: "all 0.2s ease",
+      position: "relative",
+    }}>
+      <div style={{
+        display: "flex", justifyContent: "space-between", alignItems: "flex-start",
+      }}>
+        <div style={{ flex: 1 }}>
+          <div style={{
+            fontSize: "10px", fontWeight: 600, color: cfg.color,
+            letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "4px",
+          }}>
+            {cfg.label}
+          </div>
+          <div style={{ fontSize: "14px", fontWeight: 500, color: "#e8e4ef" }}>
+            {event.name}
+          </div>
+        </div>
+        {hasLink && (
+          <div style={{
+            fontSize: "11px", color: cfg.color, opacity: 0.7,
+            marginLeft: "10px", marginTop: "2px", flexShrink: 0,
+          }}>
+            ↗
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  if (hasLink) {
+    return (
+      <a href={event.url} target="_blank" rel="noopener noreferrer"
+        style={{ textDecoration: "none", display: "block" }}>
+        {content}
+      </a>
+    );
+  }
+  return content;
+}
+
+function UpcomingCard({ event, onClick }) {
+  const cfg = TYPE_CONFIG[event.type];
+  const d = new Date(event.date + "T12:00:00");
+  const hasLink = !!event.url;
+
+  return (
+    <div onClick={onClick} style={{
+      padding: "14px 16px", borderRadius: "14px",
+      background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)",
+      cursor: "pointer", transition: "all 0.2s ease",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: cfg.color, flexShrink: 0 }} />
+          <span style={{ fontSize: "10px", fontWeight: 600, color: "rgba(232,228,239,0.4)", letterSpacing: "1px", textTransform: "uppercase" }}>
+            {d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
+          </span>
+        </div>
+        {hasLink && (
+          <a href={event.url} target="_blank" rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              fontSize: "10px", color: cfg.color, opacity: 0.6,
+              textDecoration: "none", padding: "2px 6px",
+              borderRadius: "4px", border: `1px solid ${cfg.color}33`,
+            }}>
+            Details ↗
+          </a>
+        )}
+      </div>
+      <div style={{ fontSize: "13px", fontWeight: 500, color: "#e8e4ef", lineHeight: 1.4, paddingLeft: "15px" }}>
+        {event.name}
+      </div>
+    </div>
+  );
+}
+
 export default function CalendarApp({ events, usedFallback = false }) {
   const now = new Date();
   const [currentMonth, setCurrentMonth] = useState(now.getMonth());
@@ -157,7 +243,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
                 </h2>
                 <button onClick={goToToday} style={{
                   background: "none", border: "none", color: "#E8475F", fontSize: "11px",
-                  fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase", marginTop: "4px",
+                  fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase", marginTop: "4px", cursor: "pointer",
                 }}>Today</button>
               </div>
               <button onClick={() => navigate(1)} style={{
@@ -199,6 +285,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
                     cursor: hasEvents ? "pointer" : "default",
                     display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
                     gap: "5px", transition: "all 0.2s ease", position: "relative", padding: "4px",
+                    fontFamily: "inherit",
                   }}>
                     {today && (
                       <div style={{
@@ -238,20 +325,9 @@ export default function CalendarApp({ events, usedFallback = false }) {
                   </p>
                 ) : (
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                    {filteredEvents.map((e, idx) => {
-                      const cfg = TYPE_CONFIG[e.type];
-                      return (
-                        <div key={idx} style={{
-                          padding: "14px 16px", borderRadius: "12px", background: cfg.bg,
-                          borderLeft: `3px solid ${cfg.color}`,
-                        }}>
-                          <div style={{ fontSize: "10px", fontWeight: 600, color: cfg.color, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "4px" }}>
-                            {cfg.label}
-                          </div>
-                          <div style={{ fontSize: "14px", fontWeight: 500, color: "#e8e4ef" }}>{e.name}</div>
-                        </div>
-                      );
-                    })}
+                    {filteredEvents.map((e, idx) => (
+                      <EventCard key={idx} event={e} />
+                    ))}
                   </div>
                 )}
               </div>
@@ -270,7 +346,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
                 border: "1px solid rgba(242,153,74,0.2)", marginBottom: "20px",
                 fontSize: "13px", color: "#F2994A", lineHeight: 1.5,
               }}>
-                ⚠️ Could not load events from the Google Sheet. Make sure the sheet is published to web (File → Share → Publish to web → CSV).
+                ⚠️ Could not load events. Using cached data.
               </div>
             )}
             <h3 style={{
@@ -281,28 +357,13 @@ export default function CalendarApp({ events, usedFallback = false }) {
               {upcomingEvents.length === 0 ? (
                 <p style={{ color: "rgba(232,228,239,0.3)", fontSize: "13px" }}>No upcoming events with this filter.</p>
               ) : upcomingEvents.map((e, idx) => {
-                const cfg = TYPE_CONFIG[e.type];
                 const d = new Date(e.date + "T12:00:00");
                 return (
-                  <div key={idx} onClick={() => {
+                  <UpcomingCard key={idx} event={e} onClick={() => {
                     setCurrentMonth(d.getMonth());
                     setCurrentYear(d.getFullYear());
                     setSelectedDate(e.date);
-                  }} style={{
-                    padding: "14px 16px", borderRadius: "14px",
-                    background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)",
-                    cursor: "pointer", transition: "all 0.2s ease",
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
-                      <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: cfg.color, flexShrink: 0 }} />
-                      <span style={{ fontSize: "10px", fontWeight: 600, color: "rgba(232,228,239,0.4)", letterSpacing: "1px", textTransform: "uppercase" }}>
-                        {d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
-                      </span>
-                    </div>
-                    <div style={{ fontSize: "13px", fontWeight: 500, color: "#e8e4ef", lineHeight: 1.4, paddingLeft: "15px" }}>
-                      {e.name}
-                    </div>
-                  </div>
+                  }} />
                 );
               })}
             </div>
@@ -337,6 +398,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
           to { opacity: 1; transform: translateY(0); }
         }
         button:hover { filter: brightness(1.15); }
+        a:hover > div { filter: brightness(1.1); transform: translateX(2px); }
         @media (max-width: 800px) {
           .main-grid { grid-template-columns: 1fr !important; }
         }
