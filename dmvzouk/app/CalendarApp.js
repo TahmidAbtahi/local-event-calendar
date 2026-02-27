@@ -21,6 +21,11 @@ function dateKey(y, m, d) {
   return `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 }
 
+function getTodayStr() {
+  const now = new Date();
+  return dateKey(now.getFullYear(), now.getMonth(), now.getDate());
+}
+
 const isToday = (y, m, d) => {
   const now = new Date();
   return now.getFullYear() === y && now.getMonth() === m && now.getDate() === d;
@@ -75,7 +80,7 @@ function EventCard({ event }) {
   return content;
 }
 
-function UpcomingCard({ event, onClick }) {
+function UpcomingCard({ event, onClick, isEventToday }) {
   const cfg = TYPE_CONFIG[event.type];
   const d = new Date(event.date + "T12:00:00");
   const hasLink = !!event.url;
@@ -83,15 +88,26 @@ function UpcomingCard({ event, onClick }) {
   return (
     <div onClick={onClick} style={{
       padding: "14px 16px", borderRadius: "14px",
-      background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)",
+      background: isEventToday ? "rgba(232,71,95,0.04)" : "rgba(255,255,255,0.03)",
+      border: `1px solid ${isEventToday ? "rgba(232,71,95,0.15)" : "rgba(255,255,255,0.05)"}`,
       cursor: "pointer", transition: "all 0.2s ease",
     }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: cfg.color, flexShrink: 0 }} />
+          <span className={isEventToday ? `today-glow-${event.type}` : ""} style={{
+            width: "7px", height: "7px", borderRadius: "50%",
+            background: cfg.color, flexShrink: 0,
+          }} />
           <span style={{ fontSize: "10px", fontWeight: 600, color: "rgba(232,228,239,0.4)", letterSpacing: "1px", textTransform: "uppercase" }}>
             {d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
           </span>
+          {isEventToday && (
+            <span style={{
+              fontSize: "9px", fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase",
+              color: "#E8475F", background: "rgba(232,71,95,0.15)", padding: "2px 8px",
+              borderRadius: "100px",
+            }}>Today</span>
+          )}
         </div>
         {hasLink && (
           <a href={event.url} target="_blank" rel="noopener noreferrer"
@@ -114,6 +130,7 @@ function UpcomingCard({ event, onClick }) {
 
 export default function CalendarApp({ events, usedFallback = false }) {
   const now = new Date();
+  const todayStr = getTodayStr();
   const [currentMonth, setCurrentMonth] = useState(now.getMonth());
   const [currentYear, setCurrentYear] = useState(now.getFullYear());
   const [selectedDate, setSelectedDate] = useState(null);
@@ -138,12 +155,11 @@ export default function CalendarApp({ events, usedFallback = false }) {
   }, [selectedDate, eventMap, filter]);
 
   const upcomingEvents = useMemo(() => {
-    const todayStr = now.toISOString().slice(0, 10);
     return events
       .filter((e) => e.date >= todayStr && (filter === "all" || e.type === filter))
       .sort((a, b) => a.date.localeCompare(b.date))
       .slice(0, 8);
-  }, [events, filter]);
+  }, [events, filter, todayStr]);
 
   const navigate = (dir) => {
     let m = currentMonth + dir;
@@ -175,7 +191,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
       <div style={{ position: "fixed", top: "-200px", right: "-200px", width: "600px", height: "600px", background: "radial-gradient(circle, rgba(232,71,95,0.08) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
       <div style={{ position: "fixed", bottom: "-200px", left: "-100px", width: "500px", height: "500px", background: "radial-gradient(circle, rgba(45,156,219,0.06) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: "1100px", margin: "0 auto", padding: "40px 24px 60px" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: "1400px", margin: "0 auto", padding: "40px 24px 60px" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
           <div style={{
@@ -223,7 +239,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
           ))}
         </div>
 
-        <div className="main-grid" style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "32px", alignItems: "start" }}>
+        <div className="main-grid" style={{ display: "grid", gridTemplateColumns: "1fr 520px", gap: "32px", alignItems: "start" }}>
           {/* Calendar Grid */}
           <div style={{
             background: "rgba(255,255,255,0.03)", borderRadius: "20px",
@@ -297,7 +313,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
                     {hasEvents && (
                       <div style={{ display: "flex", gap: "3px" }}>
                         {types.map((t) => (
-                          <div key={t} style={{
+                          <div key={t} className={today ? `today-glow-${t}` : ""} style={{
                             width: "5px", height: "5px", borderRadius: "50%",
                             background: TYPE_CONFIG[t]?.color || "#fff",
                           }} />
@@ -358,8 +374,9 @@ export default function CalendarApp({ events, usedFallback = false }) {
                 <p style={{ color: "rgba(232,228,239,0.3)", fontSize: "13px" }}>No upcoming events with this filter.</p>
               ) : upcomingEvents.map((e, idx) => {
                 const d = new Date(e.date + "T12:00:00");
+                const isEventToday = e.date === todayStr;
                 return (
-                  <UpcomingCard key={idx} event={e} onClick={() => {
+                  <UpcomingCard key={idx} event={e} isEventToday={isEventToday} onClick={() => {
                     setCurrentMonth(d.getMonth());
                     setCurrentYear(d.getFullYear());
                     setSelectedDate(e.date);
@@ -413,8 +430,8 @@ export default function CalendarApp({ events, usedFallback = false }) {
             fontSize: "12px", color: "rgba(232,228,239,0.3)",
             letterSpacing: "0.5px",
           }}>
-            Website built with love by{" "}
-            <a href="https://www.facebook.com/heartboundcoders"
+            Website built with care by{" "}
+            <a href="https://www.facebook.com/profile.php?id=61588535387670"
               target="_blank" rel="noopener noreferrer"
               style={{ color: "rgba(232,228,239,0.5)", fontWeight: 600 }}>
               Heart.Bound.Coders
@@ -435,9 +452,24 @@ export default function CalendarApp({ events, usedFallback = false }) {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes pulseGlowRed {
+          0%, 100% { box-shadow: 0 0 4px 2px rgba(232, 71, 95, 0.4); }
+          50% { box-shadow: 0 0 12px 6px rgba(232, 71, 95, 0.7); }
+        }
+        @keyframes pulseGlowBlue {
+          0%, 100% { box-shadow: 0 0 4px 2px rgba(45, 156, 219, 0.4); }
+          50% { box-shadow: 0 0 12px 6px rgba(45, 156, 219, 0.7); }
+        }
+        @keyframes pulseGlowOrange {
+          0%, 100% { box-shadow: 0 0 4px 2px rgba(242, 153, 74, 0.4); }
+          50% { box-shadow: 0 0 12px 6px rgba(242, 153, 74, 0.7); }
+        }
+        .today-glow-social { animation: pulseGlowRed 2s ease-in-out infinite; border-radius: 50%; }
+        .today-glow-class { animation: pulseGlowBlue 2s ease-in-out infinite; border-radius: 50%; }
+        .today-glow-festival { animation: pulseGlowOrange 2s ease-in-out infinite; border-radius: 50%; }
         button:hover { filter: brightness(1.15); }
         a:hover > div { filter: brightness(1.1); transform: translateX(2px); }
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
           .main-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
