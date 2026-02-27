@@ -390,6 +390,44 @@ export default function CalendarApp({ events, usedFallback = false }) {
             </div>
           </div>
         </div>
+
+        {/* Footer */}
+        <footer style={{
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          padding: "40px 0 32px",
+          textAlign: "center",
+          marginTop: "60px",
+        }}>
+          <p style={{
+            fontSize: "14px", color: "rgba(232,228,239,0.45)",
+            lineHeight: 1.6, fontStyle: "italic", margin: "0 0 20px",
+          }}>
+            DMV Zouk Calendar exists to support and connect our local dance community.
+          </p>
+          <div style={{
+            width: "40px", height: "1px",
+            background: "rgba(232,71,95,0.3)",
+            margin: "0 auto 20px",
+          }} />
+          <p style={{
+            fontSize: "12px", color: "rgba(232,228,239,0.3)",
+            letterSpacing: "0.5px",
+          }}>
+            Website built with love by{" "}
+            <a href="https://www.facebook.com/profile.php?id=61588535387670"
+              target="_blank" rel="noopener noreferrer"
+              style={{ color: "rgba(232,228,239,0.5)", fontWeight: 600 }}>
+              Heart.Bound.Coders
+            </a>
+          </p>
+          <p style={{
+            marginTop: "12px", fontSize: "11px",
+            color: "rgba(232,228,239,0.2)", letterSpacing: "1px",
+          }}>
+            © 2026 DMV Zouk Community
+          </p>
+        </footer>
+
       </div>
 
       <style>{`
