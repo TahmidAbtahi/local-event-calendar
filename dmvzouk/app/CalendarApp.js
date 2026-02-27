@@ -430,7 +430,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
             fontSize: "12px", color: "rgba(232,228,239,0.3)",
             letterSpacing: "0.5px",
           }}>
-            Website built with care by{" "}
+            Website built with love by{" "}
             <a href="https://www.facebook.com/profile.php?id=61588535387670"
               target="_blank" rel="noopener noreferrer"
               style={{ color: "rgba(232,228,239,0.5)", fontWeight: 600 }}>
