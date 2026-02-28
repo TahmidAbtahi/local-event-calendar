@@ -278,14 +278,16 @@ export default function CalendarApp({ events, usedFallback = false }) {
             {usedFallback ? "Showing cached events — live sync will activate once the Google Sheet is published to web" : "Auto-synced from the community Google Sheet"}
           </p>
         </div>
-
+        '''
         {/* Filter pills */}
         <div style={{ textAlign: "center", marginBottom: "36px" }}>
+          {/*
           <img src="/dancer.png" alt="" style={{
             height: "100px", width: "auto", opacity: 0.55,
             filter: `drop-shadow(0 0 20px ${theme.accent}40)`,
             marginBottom: "4px", pointerEvents: "none",
-          }} />
+          }} /> 
+          */}
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
           {[
             { key: "all", label: "All Events", color: theme.textPrimary },
