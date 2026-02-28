@@ -259,36 +259,28 @@ export default function CalendarApp({ events, usedFallback = false }) {
       <div style={{ position: "fixed", top: "-200px", right: "-200px", width: "600px", height: "600px", background: `radial-gradient(circle, ${theme.ambientTop} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
       <div style={{ position: "fixed", bottom: "-200px", left: "-100px", width: "500px", height: "500px", background: `radial-gradient(circle, ${theme.ambientBottom} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: "1200px", margin: "0 auto", padding: "40px 24px 60px" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: "1200px", margin: "0 auto", padding: "28px 24px 40px" }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <div style={{ textAlign: "center", marginBottom: "28px" }}>
           <div style={{
-            display: "inline-block", padding: "6px 18px", borderRadius: "100px",
+            display: "inline-block", padding: "5px 16px", borderRadius: "100px",
             background: theme.accentBg, border: `1px solid ${theme.accentBorder}`,
-            fontSize: "11px", fontWeight: 600, letterSpacing: "2.5px", textTransform: "uppercase",
-            color: theme.accent, marginBottom: "20px",
+            fontSize: "10px", fontWeight: 600, letterSpacing: "2.5px", textTransform: "uppercase",
+            color: theme.accent, marginBottom: "14px",
           }}>DC Metro Area</div>
           <h1 style={{
-            fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 5vw, 52px)",
-            fontWeight: 700, margin: "0 0 10px", lineHeight: 1.1,
+            fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 4vw, 44px)",
+            fontWeight: 700, margin: "0 0 6px", lineHeight: 1.1,
             background: theme.titleGradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>Brazilian Zouk</h1>
-          <p style={{ fontSize: "15px", color: theme.textMuted, fontWeight: 300, letterSpacing: "4px", textTransform: "uppercase", margin: 0 }}>Calendar of Events</p>
-          <p style={{ fontSize: "11px", color: theme.textGhost, marginTop: "6px", fontStyle: "italic" }}>
+          <p style={{ fontSize: "13px", color: theme.textMuted, fontWeight: 300, letterSpacing: "4px", textTransform: "uppercase", margin: 0 }}>Calendar of Events</p>
+          <p style={{ fontSize: "10px", color: theme.textGhost, marginTop: "8px", fontStyle: "italic" }}>
             {usedFallback ? "Showing cached events — live sync will activate once the Google Sheet is published to web" : "Auto-synced from the community Google Sheet"}
           </p>
         </div>
-        '''
+
         {/* Filter pills */}
-        <div style={{ textAlign: "center", marginBottom: "36px" }}>
-          {/*
-          <img src="/dancer.png" alt="" style={{
-            height: "100px", width: "auto", opacity: 0.55,
-            filter: `drop-shadow(0 0 20px ${theme.accent}40)`,
-            marginBottom: "4px", pointerEvents: "none",
-          }} /> 
-          */}
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", marginBottom: "24px", flexWrap: "wrap" }}>
           {[
             { key: "all", label: "All Events", color: theme.textPrimary },
             ...Object.entries(T).map(([k, v]) => ({ key: k, label: v.label, color: v.color })),
@@ -308,25 +300,24 @@ export default function CalendarApp({ events, usedFallback = false }) {
               {f.label}
             </button>
           ))}
-          </div>
         </div>
 
         <div className="main-grid" style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: "32px", alignItems: "start" }}>
           {/* Calendar Grid */}
           <div ref={calendarRef} style={{
             background: theme.cardBg, borderRadius: "20px",
-            border: `1px solid ${theme.cardBorder}`, padding: "28px",
+            border: `1px solid ${theme.cardBorder}`, padding: "20px",
             backdropFilter: "blur(20px)",
           }}>
             {/* Month nav */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "28px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
               <button onClick={() => navigate(-1)} style={{
                 width: "40px", height: "40px", borderRadius: "12px", border: `1px solid ${theme.cardBorderHover}`,
                 background: theme.cellBg, color: theme.textPrimary, fontSize: "18px",
                 display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s",
               }}>←</button>
               <div style={{ textAlign: "center" }}>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "26px", fontWeight: 700, margin: 0 }}>
+                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", fontWeight: 700, margin: 0 }}>
                   {MONTHS[currentMonth]} {currentYear}
                 </h2>
                 <button onClick={goToToday} style={{
@@ -364,11 +355,11 @@ export default function CalendarApp({ events, usedFallback = false }) {
 
                 return (
                   <button key={day} onClick={() => hasEvents && setSelectedDate(isSelected ? null : dk)} style={{
-                    aspectRatio: "1", borderRadius: "14px", border: "1px solid",
+                    aspectRatio: "1", borderRadius: "10px", border: "1px solid",
                     borderColor: isSelected ? theme.accentStrong : today ? theme.accentMedium : theme.cellBorder,
                     background: isSelected ? theme.accentBg : today ? theme.accentFaint : hasEvents ? theme.cellBg : "transparent",
                     color: isSelected || today ? "#fff" : hasEvents ? theme.textPrimary : theme.textFaint,
-                    fontSize: "15px", fontWeight: today || isSelected ? 700 : 400,
+                    fontSize: "13px", fontWeight: today || isSelected ? 700 : 400,
                     cursor: hasEvents ? "pointer" : "default",
                     display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
                     gap: "5px", transition: "all 0.2s ease", position: "relative", padding: "4px",
@@ -422,7 +413,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
           {/* Sidebar - scrollable, matching calendar height */}
           <div style={{
             background: theme.cardBg, borderRadius: "20px",
-            border: `1px solid ${theme.cardBorder}`, padding: "28px",
+            border: `1px solid ${theme.cardBorder}`, padding: "20px",
             backdropFilter: "blur(20px)", position: "sticky", top: "20px",
             height: calendarHeight ? `${calendarHeight}px` : "auto",
             display: "flex", flexDirection: "column",
@@ -493,7 +484,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
         {/* Footer */}
         <footer style={{
           borderTop: `1px solid ${theme.cardBorder}`,
-          padding: "40px 0 32px", textAlign: "center", marginTop: "60px",
+          padding: "30px 0 24px", textAlign: "center", marginTop: "40px",
         }}>
           <p style={{ fontSize: "14px", color: theme.textLabel, lineHeight: 1.6, fontStyle: "italic", margin: "0 0 20px" }}>
             DMV Zouk Calendar exists to support and connect our local dance community.
