@@ -280,12 +280,13 @@ export default function CalendarApp({ events, usedFallback = false }) {
         </div>
 
         {/* Filter pills */}
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", marginBottom: "36px", flexWrap: "wrap" }}>
+        <div style={{ textAlign: "center", marginBottom: "36px" }}>
           <img src="/dancer.png" alt="" style={{
-            height: "65px", width: "auto", opacity: 0.6,
-            filter: `drop-shadow(0 0 12px ${theme.accent}40)`,
-            marginRight: "6px", pointerEvents: "none",
+            height: "140px", width: "auto", opacity: 0.55,
+            filter: `drop-shadow(0 0 20px ${theme.accent}40)`,
+            marginBottom: "16px", pointerEvents: "none",
           }} />
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
           {[
             { key: "all", label: "All Events", color: theme.textPrimary },
             ...Object.entries(T).map(([k, v]) => ({ key: k, label: v.label, color: v.color })),
@@ -305,6 +306,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
               {f.label}
             </button>
           ))}
+          </div>
         </div>
 
         <div className="main-grid" style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: "32px", alignItems: "start" }}>
