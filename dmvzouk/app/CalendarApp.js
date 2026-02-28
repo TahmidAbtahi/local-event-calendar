@@ -254,14 +254,14 @@ export default function CalendarApp({ events, usedFallback = false }) {
   const T = theme.types;
 
   return (
-    <div style={{ minHeight: "100vh", background: theme.bg, padding: 0, overflow: "" }}>
+    <div style={{ minHeight: "100vh", background: theme.bg, padding: 0, overflow: "auto" }}>
       {/* Ambient glow */}
       <div style={{ position: "fixed", top: "-200px", right: "-200px", width: "600px", height: "600px", background: `radial-gradient(circle, ${theme.ambientTop} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
       <div style={{ position: "fixed", bottom: "-200px", left: "-100px", width: "500px", height: "500px", background: `radial-gradient(circle, ${theme.ambientBottom} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
 
       <div style={{ position: "relative", zIndex: 1, maxWidth: "1200px", margin: "0 auto", padding: "40px 24px 60px" }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "48px" }}>
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <div style={{
             display: "inline-block", padding: "6px 18px", borderRadius: "100px",
             background: theme.accentBg, border: `1px solid ${theme.accentBorder}`,
@@ -274,17 +274,17 @@ export default function CalendarApp({ events, usedFallback = false }) {
             background: theme.titleGradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>Brazilian Zouk</h1>
           <p style={{ fontSize: "15px", color: theme.textMuted, fontWeight: 300, letterSpacing: "4px", textTransform: "uppercase", margin: 0 }}>Calendar of Events</p>
-          <p style={{ fontSize: "11px", color: theme.textGhost, marginTop: "12px", fontStyle: "italic" }}>
+          <p style={{ fontSize: "11px", color: theme.textGhost, marginTop: "6px", fontStyle: "italic" }}>
             {usedFallback ? "Showing cached events — live sync will activate once the Google Sheet is published to web" : "Auto-synced from the community Google Sheet"}
           </p>
         </div>
 
         {/* Filter pills */}
-        <div style={{ textAlign: "center", marginBottom: "28px" }}>
+        <div style={{ textAlign: "center", marginBottom: "36px" }}>
           <img src="/dancer.png" alt="" style={{
-            height: "120px", width: "auto", opacity: 0.55,
+            height: "100px", width: "auto", opacity: 0.55,
             filter: `drop-shadow(0 0 20px ${theme.accent}40)`,
-            marginBottom: "12px", pointerEvents: "none",
+            marginBottom: "4px", pointerEvents: "none",
           }} />
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
           {[
