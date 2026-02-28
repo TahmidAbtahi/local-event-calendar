@@ -282,9 +282,9 @@ export default function CalendarApp({ events, usedFallback = false }) {
         {/* Filter pills */}
         <div style={{ textAlign: "center", marginBottom: "36px" }}>
           <img src="/dancer.png" alt="" style={{
-            height: "140px", width: "auto", opacity: 0.55,
+            height: "120px", width: "auto", opacity: 0.55,
             filter: `drop-shadow(0 0 20px ${theme.accent}40)`,
-            marginBottom: "16px", pointerEvents: "none",
+            marginBottom: "12px", pointerEvents: "none",
           }} />
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
           {[
