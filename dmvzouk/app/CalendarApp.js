@@ -254,7 +254,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
   const T = theme.types;
 
   return (
-    <div style={{ minHeight: "100vh", background: theme.bg, padding: 0, overflow: "auto" }}>
+    <div style={{ minHeight: "100vh", background: theme.bg, padding: 0, overflow: "" }}>
       {/* Ambient glow */}
       <div style={{ position: "fixed", top: "-200px", right: "-200px", width: "600px", height: "600px", background: `radial-gradient(circle, ${theme.ambientTop} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
       <div style={{ position: "fixed", bottom: "-200px", left: "-100px", width: "500px", height: "500px", background: `radial-gradient(circle, ${theme.ambientBottom} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
@@ -280,7 +280,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
         </div>
 
         {/* Filter pills */}
-        <div style={{ textAlign: "center", marginBottom: "36px" }}>
+        <div style={{ textAlign: "center", marginBottom: "28px" }}>
           <img src="/dancer.png" alt="" style={{
             height: "120px", width: "auto", opacity: 0.55,
             filter: `drop-shadow(0 0 20px ${theme.accent}40)`,
