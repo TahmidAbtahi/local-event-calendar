@@ -355,7 +355,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
 
                 return (
                   <button key={day} onClick={() => hasEvents && setSelectedDate(isSelected ? null : dk)} style={{
-                    aspectRatio: "1", borderRadius: "10px", border: "1px solid",
+                    height: "44px", borderRadius: "10px", border: "1px solid",
                     borderColor: isSelected ? theme.accentStrong : today ? theme.accentMedium : theme.cellBorder,
                     background: isSelected ? theme.accentBg : today ? theme.accentFaint : hasEvents ? theme.cellBg : "transparent",
                     color: isSelected || today ? "#fff" : hasEvents ? theme.textPrimary : theme.textFaint,
