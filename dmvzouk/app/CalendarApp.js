@@ -104,7 +104,7 @@ function UpcomingCard(props) {
     <div onClick={onClick} style={{ padding: "14px 16px", borderRadius: "14px", background: isEventToday ? theme.accent + "0A" : theme.cardBg, border: "1px solid " + (isEventToday ? theme.accent + "26" : theme.cardBorder), cursor: "pointer", transition: "all 0.2s ease" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span className={isEventToday ? "today-glow-" + event.type : ""} style={{ width: "7px", height: "7px", borderRadius: "50%", background: cfg.color, flexShrink: 0 }} />
+          <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: cfg.color, flexShrink: 0 }} />
           <span style={{ fontSize: "10px", fontWeight: 600, color: theme.textFaint, letterSpacing: "1px", textTransform: "uppercase" }}>{d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</span>
           {isEventToday && <span style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: theme.accent, background: theme.accentBg, padding: "2px 8px", borderRadius: "100px" }}>Today</span>}
         </div>
@@ -170,12 +170,6 @@ export default function CalendarApp(props) {
 
   var dynamicCSS =
     "@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } } " +
-    "@keyframes pulseGlowSocial { 0%, 100% { box-shadow: 0 0 4px 2px " + T.social.glowWeak + "; } 50% { box-shadow: 0 0 12px 6px " + T.social.glowStrong + "; } } " +
-    "@keyframes pulseGlowClass { 0%, 100% { box-shadow: 0 0 4px 2px " + T["class"].glowWeak + "; } 50% { box-shadow: 0 0 12px 6px " + T["class"].glowStrong + "; } } " +
-    "@keyframes pulseGlowFestival { 0%, 100% { box-shadow: 0 0 4px 2px " + T.festival.glowWeak + "; } 50% { box-shadow: 0 0 12px 6px " + T.festival.glowStrong + "; } } " +
-    ".today-glow-social { animation: pulseGlowSocial 2s ease-in-out infinite; border-radius: 50%; } " +
-    ".today-glow-class { animation: pulseGlowClass 2s ease-in-out infinite; border-radius: 50%; } " +
-    ".today-glow-festival { animation: pulseGlowFestival 2s ease-in-out infinite; border-radius: 50%; } " +
     "button:hover { filter: brightness(1.15); } " +
     ".events-scroll { scrollbar-width: thin; scrollbar-color: " + theme.scrollThumb + " transparent; } " +
     ".events-scroll::-webkit-scrollbar { width: 4px; } " +
@@ -214,19 +208,19 @@ export default function CalendarApp(props) {
           })}
         </div>
 
-        <div className="main-grid" style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: "32px", alignItems: "start" }}>
-          <div ref={calendarRef} style={{ background: theme.cardBg, borderRadius: "20px", border: "1px solid " + theme.cardBorder, padding: "28px", backdropFilter: "blur(20px)" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "28px" }}>
-              <button onClick={function(){navigate(-1)}} style={{ width: "40px", height: "40px", borderRadius: "12px", border: "1px solid " + theme.cardBorderHover, background: theme.cellBg, color: theme.textPrimary, fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center" }}>{"←"}</button>
+        <div className="main-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "24px", alignItems: "start" }}>
+          <div ref={calendarRef} style={{ background: theme.cardBg, borderRadius: "16px", border: "1px solid " + theme.cardBorder, padding: "20px", backdropFilter: "blur(20px)" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
+              <button onClick={function(){navigate(-1)}} style={{ width: "32px", height: "32px", borderRadius: "10px", border: "1px solid " + theme.cardBorderHover, background: theme.cellBg, color: theme.textPrimary, fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>{"←"}</button>
               <div style={{ textAlign: "center" }}>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "26px", fontWeight: 700, margin: 0 }}>{MONTHS[currentMonth] + " " + currentYear}</h2>
+                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", fontWeight: 700, margin: 0 }}>{MONTHS[currentMonth] + " " + currentYear}</h2>
                 <button onClick={goToToday} style={{ background: "none", border: "none", color: theme.accent, fontSize: "11px", fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase", marginTop: "4px", cursor: "pointer" }}>Today</button>
               </div>
-              <button onClick={function(){navigate(1)}} style={{ width: "40px", height: "40px", borderRadius: "12px", border: "1px solid " + theme.cardBorderHover, background: theme.cellBg, color: theme.textPrimary, fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center" }}>{"→"}</button>
+              <button onClick={function(){navigate(1)}} style={{ width: "32px", height: "32px", borderRadius: "10px", border: "1px solid " + theme.cardBorderHover, background: theme.cellBg, color: theme.textPrimary, fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>{"→"}</button>
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "4px", marginBottom: "8px" }}>
-              {DAYS_LABELS.map(function(dl) { return <div key={dl} style={{ textAlign: "center", fontSize: "11px", fontWeight: 600, color: theme.textSubtle, letterSpacing: "1.5px", textTransform: "uppercase", padding: "8px 0" }}>{dl}</div>; })}
+              {DAYS_LABELS.map(function(dl) { return <div key={dl} style={{ textAlign: "center", fontSize: "10px", fontWeight: 600, color: theme.textSubtle, letterSpacing: "1px", textTransform: "uppercase", padding: "6px 0" }}>{dl}</div>; })}
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "4px" }}>
@@ -240,10 +234,10 @@ export default function CalendarApp(props) {
                 var types = [];
                 dayEvents.forEach(function(e) { if (types.indexOf(e.type) === -1) types.push(e.type); });
                 return (
-                  <button key={day} onClick={function(){setSelectedDate(isSelected ? null : dk)}} style={{ aspectRatio: "1", borderRadius: "14px", border: "1px solid", borderColor: isSelected ? theme.accentStrong : today ? theme.accentMedium : theme.cellBorder, background: isSelected ? theme.accentBg : today ? theme.accentFaint : hasEvents ? theme.cellBg : "transparent", color: isSelected || today ? "#fff" : hasEvents ? theme.textPrimary : theme.textFaint, fontSize: "15px", fontWeight: today || isSelected ? 700 : 400, cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "5px", transition: "all 0.2s ease", position: "relative", padding: "4px", fontFamily: "inherit" }}>
+                  <button key={day} onClick={function(){setSelectedDate(isSelected ? null : dk)}} style={{ aspectRatio: "1", borderRadius: "10px", border: "1px solid", borderColor: isSelected ? theme.accentStrong : today ? theme.accentMedium : theme.cellBorder, background: isSelected ? theme.accentBg : today ? theme.accentFaint : hasEvents ? theme.cellBg : "transparent", color: isSelected || today ? "#fff" : hasEvents ? theme.textPrimary : theme.textFaint, fontSize: "12px", fontWeight: today || isSelected ? 700 : 400, cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px", transition: "all 0.2s ease", position: "relative", padding: "3px", fontFamily: "inherit" }}>
                     {today && <div style={{ position: "absolute", top: "5px", right: "5px", width: "5px", height: "5px", borderRadius: "50%", background: theme.accent }} />}
                     <span>{day}</span>
-                    {hasEvents && <div style={{ display: "flex", gap: "3px" }}>{types.map(function(t) { return <div key={t} className={today ? "today-glow-" + t : ""} style={{ width: "5px", height: "5px", borderRadius: "50%", background: T[t] ? T[t].color : "#fff" }} />; })}</div>}
+                    {hasEvents && <div style={{ display: "flex", gap: "3px" }}>{types.map(function(t) { return <div key={t} style={{ width: "4px", height: "4px", borderRadius: "50%", background: T[t] ? T[t].color : "#fff" }} />; })}</div>}
                   </button>
                 );
               })}
@@ -266,7 +260,7 @@ export default function CalendarApp(props) {
             )}
           </div>
 
-          <div style={{ background: theme.cardBg, borderRadius: "20px", border: "1px solid " + theme.cardBorder, padding: "28px", backdropFilter: "blur(20px)", position: "sticky", top: "20px", height: calendarHeight ? calendarHeight + "px" : "auto", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+          <div style={{ background: theme.cardBg, borderRadius: "16px", border: "1px solid " + theme.cardBorder, padding: "20px", backdropFilter: "blur(20px)", position: "sticky", top: "20px", height: calendarHeight ? calendarHeight + "px" : "auto", display: "flex", flexDirection: "column", overflow: "hidden" }}>
             {events.length === 0 && <div style={{ padding: "20px", borderRadius: "12px", background: "rgba(242,153,74,0.1)", border: "1px solid rgba(242,153,74,0.2)", marginBottom: "20px", fontSize: "13px", color: "#F2994A", lineHeight: 1.5, flexShrink: 0 }}>{"Could not load events. Using cached data."}</div>}
             <h3 style={{ fontSize: "11px", fontWeight: 600, letterSpacing: "2.5px", textTransform: "uppercase", color: theme.textLabel, margin: "0 0 20px", flexShrink: 0 }}>Upcoming Events</h3>
             <div className="events-scroll" style={{ flex: 1, overflowY: "auto", paddingRight: "8px", display: "flex", flexDirection: "column", gap: "12px" }}>
