@@ -354,13 +354,13 @@ export default function CalendarApp({ events, usedFallback = false }) {
                 const types = [...new Set(dayEvents.map((e) => e.type))];
 
                 return (
-                  <button key={day} onClick={() => hasEvents && setSelectedDate(isSelected ? null : dk)} style={{
-                    height: "54px", borderRadius: "10px", border: "1px solid",
+                  <button key={day} onClick={() => setSelectedDate(isSelected ? null : dk)} style={{
+                    height: "44px", borderRadius: "10px", border: "1px solid",
                     borderColor: isSelected ? theme.accentStrong : today ? theme.accentMedium : theme.cellBorder,
                     background: isSelected ? theme.accentBg : today ? theme.accentFaint : hasEvents ? theme.cellBg : "transparent",
                     color: isSelected || today ? "#fff" : hasEvents ? theme.textPrimary : theme.textFaint,
                     fontSize: "13px", fontWeight: today || isSelected ? 700 : 400,
-                    cursor: hasEvents ? "pointer" : "default",
+                    cursor: "pointer",
                     display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
                     gap: "5px", transition: "all 0.2s ease", position: "relative", padding: "4px",
                     fontFamily: "inherit",
@@ -501,7 +501,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
           </p>
           <div style={{ width: "40px", height: "1px", background: theme.accentMedium, margin: "0 auto 20px" }} />
           <p style={{ fontSize: "12px", color: theme.textDim, letterSpacing: "0.5px" }}>
-            Website built with love by{" "}
+            Website built with care by{" "}
             <a href="https://www.facebook.com/profile.php?id=61588535387670"
               target="_blank" rel="noopener noreferrer"
               style={{ color: theme.textMuted, fontWeight: 600 }}>Heart.Bound.Coders</a>
