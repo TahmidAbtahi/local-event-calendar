@@ -496,40 +496,23 @@ export default function CalendarApp({ events, usedFallback = false }) {
         </footer>
       </div>
 
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes pulseGlowSocial {
-          0%, 100% { box-shadow: 0 0 4px 2px ${T.social.glowWeak}; }
-          50% { box-shadow: 0 0 12px 6px ${T.social.glowStrong}; }
-        }
-        @keyframes pulseGlowClass {
-          0%, 100% { box-shadow: 0 0 4px 2px ${T.class.glowWeak}; }
-          50% { box-shadow: 0 0 12px 6px ${T.class.glowStrong}; }
-        }
-        @keyframes pulseGlowFestival {
-          0%, 100% { box-shadow: 0 0 4px 2px ${T.festival.glowWeak}; }
-          50% { box-shadow: 0 0 12px 6px ${T.festival.glowStrong}; }
-        }
-        .today-glow-social { animation: pulseGlowSocial 2s ease-in-out infinite; border-radius: 50%; }
-        .today-glow-class { animation: pulseGlowClass 2s ease-in-out infinite; border-radius: 50%; }
-        .today-glow-festival { animation: pulseGlowFestival 2s ease-in-out infinite; border-radius: 50%; }
-        button:hover { filter: brightness(1.15); }
-        a:hover > div { filter: brightness(1.1); transform: translateX(2px); }
-        .events-scroll {
-          scrollbar-width: thin;
-          scrollbar-color: ${theme.scrollThumb} transparent;
-        }
-        .events-scroll::-webkit-scrollbar { width: 4px; }
-        .events-scroll::-webkit-scrollbar-track { background: transparent; }
-        .events-scroll::-webkit-scrollbar-thumb { background: ${theme.scrollThumb}; border-radius: 4px; }
-        .events-scroll::-webkit-scrollbar-thumb:hover { background: ${theme.scrollThumbHover}; }
-        @media (max-width: 900px) {
-          .main-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+      <style dangerouslySetInnerHTML={{ __html: [
+        "@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }",
+        "@keyframes pulseGlowSocial { 0%, 100% { box-shadow: 0 0 4px 2px " + T.social.glowWeak + "; } 50% { box-shadow: 0 0 12px 6px " + T.social.glowStrong + "; } }",
+        "@keyframes pulseGlowClass { 0%, 100% { box-shadow: 0 0 4px 2px " + T.class.glowWeak + "; } 50% { box-shadow: 0 0 12px 6px " + T.class.glowStrong + "; } }",
+        "@keyframes pulseGlowFestival { 0%, 100% { box-shadow: 0 0 4px 2px " + T.festival.glowWeak + "; } 50% { box-shadow: 0 0 12px 6px " + T.festival.glowStrong + "; } }",
+        ".today-glow-social { animation: pulseGlowSocial 2s ease-in-out infinite; border-radius: 50%; }",
+        ".today-glow-class { animation: pulseGlowClass 2s ease-in-out infinite; border-radius: 50%; }",
+        ".today-glow-festival { animation: pulseGlowFestival 2s ease-in-out infinite; border-radius: 50%; }",
+        "button:hover { filter: brightness(1.15); }",
+        "a:hover > div { filter: brightness(1.1); transform: translateX(2px); }",
+        ".events-scroll { scrollbar-width: thin; scrollbar-color: " + theme.scrollThumb + " transparent; }",
+        ".events-scroll::-webkit-scrollbar { width: 4px; }",
+        ".events-scroll::-webkit-scrollbar-track { background: transparent; }",
+        ".events-scroll::-webkit-scrollbar-thumb { background: " + theme.scrollThumb + "; border-radius: 4px; }",
+        ".events-scroll::-webkit-scrollbar-thumb:hover { background: " + theme.scrollThumbHover + "; }",
+        "@media (max-width: 900px) { .main-grid { grid-template-columns: 1fr !important; } }",
+      ].join("\n") }} />
     </div>
   );
 }
