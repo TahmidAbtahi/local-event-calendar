@@ -390,22 +390,32 @@ export default function CalendarApp({ events, usedFallback = false }) {
             {/* Selected date detail */}
             {selectedDate && (
               <div style={{
-                marginTop: "24px", padding: "20px", borderRadius: "16px",
+                marginTop: "16px", padding: "16px", borderRadius: "12px",
                 background: theme.cardBg, border: `1px solid ${theme.cardBorder}`,
                 animation: "fadeIn 0.2s ease",
+                display: "flex", gap: "16px", alignItems: "stretch",
               }}>
-                <h3 style={{ fontSize: "14px", fontWeight: 600, margin: "0 0 16px", color: theme.textLegend, letterSpacing: "1px", textTransform: "uppercase" }}>
-                  {new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
-                </h3>
-                {filteredEvents.length === 0 ? (
-                  <p style={{ color: theme.textFaint, fontSize: "14px", margin: 0 }}>
-                    No events this day{filter !== "all" ? " (with current filter)" : ""}.
-                  </p>
-                ) : (
-                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                    {filteredEvents.map((e, idx) => <EventCard key={idx} event={e} theme={theme} />)}
-                  </div>
-                )}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <h3 style={{ fontSize: "12px", fontWeight: 600, margin: "0 0 10px", color: theme.textLegend, letterSpacing: "1px", textTransform: "uppercase" }}>
+                    {new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
+                  </h3>
+                  {filteredEvents.length === 0 ? (
+                    <p style={{ color: theme.textFaint, fontSize: "14px", margin: 0 }}>
+                      No events this day{filter !== "all" ? " (with current filter)" : ""}.
+                    </p>
+                  ) : (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                      {filteredEvents.map((e, idx) => <EventCard key={idx} event={e} theme={theme} />)}
+                    </div>
+                  )}
+                </div>
+                <div style={{ flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <img src="/dancer.png" alt="" style={{
+                    height: "120px", width: "auto",
+                    filter: `drop-shadow(0 0 15px ${theme.accent}33)`,
+                    pointerEvents: "none",
+                  }} />
+                </div>
               </div>
             )}
           </div>
@@ -491,7 +501,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
           </p>
           <div style={{ width: "40px", height: "1px", background: theme.accentMedium, margin: "0 auto 20px" }} />
           <p style={{ fontSize: "12px", color: theme.textDim, letterSpacing: "0.5px" }}>
-            Website built with care by{" "}
+            Website built with love by{" "}
             <a href="https://www.facebook.com/profile.php?id=61588535387670"
               target="_blank" rel="noopener noreferrer"
               style={{ color: theme.textMuted, fontWeight: 600 }}>Heart.Bound.Coders</a>
