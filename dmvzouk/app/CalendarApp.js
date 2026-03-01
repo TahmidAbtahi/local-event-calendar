@@ -468,23 +468,6 @@ export default function CalendarApp({ events, usedFallback = false }) {
               borderRadius: "0 0 20px 20px", pointerEvents: "none",
             }} />
 
-            {/* Legend & Source pinned at bottom */}
-            <div style={{ flexShrink: 0, position: "relative", zIndex: 1, background: theme.fadeBottom, paddingTop: "8px" }}>
-              <div style={{ borderTop: `1px solid ${theme.cardBorder}`, paddingTop: "16px" }}>
-                <h4 style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: theme.textSubtle, margin: "0 0 10px" }}>Legend</h4>
-                <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginBottom: "12px" }}>
-                  {Object.entries(T).map(([k, v]) => (
-                    <div key={k} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                      <div style={{ width: "16px", height: "6px", borderRadius: "3px", background: v.color }} />
-                      <span style={{ fontSize: "11px", color: theme.textLegend, fontWeight: 500 }}>{v.label}</span>
-                    </div>
-                  ))}
-                </div>
-                <a href="https://docs.google.com/spreadsheets/d/1YHB3_Qgpo4lu7fCcDGJ5JwF-NBKxbqX2YjcxSTZa5EE/edit?pli=1&gid=559538023#gid=559538023"
-                  target="_blank" rel="noopener noreferrer" style={{
-                    fontSize: "11px", color: theme.textSubtle, display: "flex", alignItems: "center", gap: "6px",
-                  }}>📊 View source spreadsheet →</a>
-              </div>
             </div>
           </div>
         </div>
@@ -494,6 +477,11 @@ export default function CalendarApp({ events, usedFallback = false }) {
           borderTop: `1px solid ${theme.cardBorder}`,
           padding: "40px 0 32px", textAlign: "center", marginTop: "60px",
         }}>
+          <a href="https://docs.google.com/spreadsheets/d/1YHB3_Qgpo4lu7fCcDGJ5JwF-NBKxbqX2YjcxSTZa5EE/edit?pli=1&gid=559538023#gid=559538023"
+            target="_blank" rel="noopener noreferrer" style={{
+              fontSize: "11px", color: theme.textSubtle, display: "inline-flex", alignItems: "center", gap: "6px",
+              marginBottom: "20px",
+            }}>📊 View source spreadsheet →</a>
           <p style={{ fontSize: "14px", color: theme.textLabel, lineHeight: 1.6, fontStyle: "italic", margin: "0 0 20px" }}>
             DMV Zouk Calendar exists to support and connect our local dance community.
           </p>
