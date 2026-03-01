@@ -189,13 +189,13 @@ function UpcomingCard({ event, onClick, isEventToday, theme }) {
 // --- MAIN ---
 export default function CalendarApp({ events, usedFallback = false }) {
   const [theme, setTheme] = useState(MIDNIGHT_ROSE);
-  useEffect(() => { setTheme(getTheme()); }, []);
+  useEffect(() => { setTheme(getTheme()); setSelectedDate(getTodayStr()); }, []);
 
   const now = new Date();
   const todayStr = getTodayStr();
   const [currentMonth, setCurrentMonth] = useState(now.getMonth());
   const [currentYear, setCurrentYear] = useState(now.getFullYear());
-  const [selectedDate, setSelectedDate] = useState(getTodayStr());
+  const [selectedDate, setSelectedDate] = useState(null);
   const [filter, setFilter] = useState("all");
   const [calendarHeight, setCalendarHeight] = useState(null);
 
