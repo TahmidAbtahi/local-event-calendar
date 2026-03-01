@@ -195,7 +195,7 @@ export default function CalendarApp({ events, usedFallback = false }) {
   const todayStr = getTodayStr();
   const [currentMonth, setCurrentMonth] = useState(now.getMonth());
   const [currentYear, setCurrentYear] = useState(now.getFullYear());
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(getTodayStr());
   const [filter, setFilter] = useState("all");
   const [calendarHeight, setCalendarHeight] = useState(null);
 
